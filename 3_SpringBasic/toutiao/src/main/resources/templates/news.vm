@@ -1,0 +1,46 @@
+<html>
+<body>
+<pre>
+    hello, dblinux!
+
+    ## velocity 模板语法
+    #*
+    长注释
+     *#
+
+    $!{value1}     ## 显示变量value1的值
+    $!{value2}     ## 加上叹号。如果变量value2不存在，那么就不显示了
+    ${value3}      ## 不加叹号。如果变量value3不存在，那么就当成文本显示
+
+    #foreach($color in $colors)
+        Color $!{foreach.index}/$!{foreach.count}: $!{color}
+    #end
+
+    #foreach($key in $map.keySet())
+        Number $!{foreach.index}/$!{foreach.count}: $!{key}  $map.get{$key}
+    #end
+
+    #foreach($kv in $map.entrySet())
+        Number $!{foreach.index}/$!{foreach.count}: $!{kv.key}  $!{kv.value}
+    #end
+
+    ## 显示自定义数据结构, 两种方式用来显示数据
+    User: $!{user.name}
+    User: $!{user.getName()}
+
+    ## 高级语法，包含、解析（因为每个网页的顶部和尾部都是一样的，所以写一个公共的，直接include就好，免得在每一个页面下都操作一遍）
+    ## 两个操作均可以达到要求，一个是include，但仅仅包含单纯的HTML文本，而parse可以解析出来，更高级。
+    #set($title = "nowcoder")
+    Include: #include("header.vm")<br>
+    Parse: #parse("header.vm")
+
+    ## 变量传递，并且了解双引号的才会被解析，单引号的只会被单纯显示成文本
+    #set($hello = "hello")
+    #set($hworld1 = "$!{hello} world")
+    #set($hworld2 = '$!{hello} world')
+    hello1: $hworld1
+    hello2: $hworld2
+
+</pre>
+</body>
+</html>
